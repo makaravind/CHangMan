@@ -1,7 +1,5 @@
 #include "stdafx.h"
-#include "./../src/BoardUtils.h"
 #include "./../src/UserUtils.h"
-#include "./../src/MovesUtils.h"
 
 using namespace System;
 using namespace System::Text;
