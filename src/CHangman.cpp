@@ -24,7 +24,7 @@
 		until user guesses the word or number of chances are decreased to zero.
 
 		// programming detailed (editing)
-		Here we user a Ply struture which consists of user name, chances count, generated word
+		Here we user a board struture which consists of user name, chances count, generated word
 		All funcitons realted to user are in UserUtils.
 					  related to game in GameUtil.
 		Each blank can be represented by any char other than alphabet
@@ -48,22 +48,22 @@
 			
 			print {{ user.name }} you are defeated !
 */
-bool PrintStatus(Ply* ply){
+bool PrintStatus(board* board){
 
-	if (ply->chances == 0 || VerifyWord(ply)){
+	if (board->chances == 0 || VerifyWord(board)){
 		printf("Your game is completed..\n");
 
-		if (ply->chances == 0)
+		if (board->chances == 0)
 			printf("you are defeated!");
-		else if (VerifyWord(ply))
+		else if (VerifyWord(board))
 			printf("congrats! You won!");
-		PrintPly(ply);
+		Printboard(board);
 
 		return false;
 	}
 
 	//print current status
-	PrintPly(ply);
+	Printboard(board);
 	return true;
 }
 
@@ -93,17 +93,17 @@ int main()
 	User *user = createUser(name);
 
 	// Start the game
-	// Init the ply
+	// Init the board
 
 	//printf("%s", PickWord());
-	Ply *ply = InitGame(name);
+	board *board = InitGame(name);
 
 	printf("game starts...\n");
 	char letter = 0;
 	while (true)
 	{
 		
-		if (!PrintStatus(ply))
+		if (!PrintStatus(board))
 			break;
 
 		// ask for the letter
@@ -116,11 +116,12 @@ int main()
 		}
 
 		//check the letter
-		if(!Check(ply, letter))
-			ply->chances -= 1; 
+		if(!Check(board, letter))
+			board->chances -= 1; 
 			
 	}
 
+	EndGame(board);
 	_getch();
 }
 
