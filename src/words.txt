@@ -1,0 +1,4 @@
+2
+car
+laptop
+bottle

@@ -18,9 +18,12 @@
     <ClInclude Include="UserUtils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameUtils.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C15Puzzle.cpp">
+    <ClCompile Include="CHangman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

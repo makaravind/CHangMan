@@ -1,6 +1,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<stdio.h>
 #include<stdlib.h>
+#include<conio.h>
+#include<ctype.h>
+#include "UserUtils.h"
+#include "GameUtils.h"
 
 /*
 	
@@ -44,10 +48,80 @@
 			
 			print {{ user.name }} you are defeated !
 */
+bool PrintStatus(Ply* ply){
+
+	if (ply->chances == 0 || VerifyWord(ply)){
+		printf("Your game is completed..\n");
+
+		if (ply->chances == 0)
+			printf("you are defeated!");
+		else if (VerifyWord(ply))
+			printf("congrats! You won!");
+		PrintPly(ply);
+
+		return false;
+	}
+
+	//print current status
+	PrintPly(ply);
+	return true;
+}
+
+/*
+	considering only alpha characters
+*/
+char TakeInput(){
+
+	char letter;
+
+	printf("guess a letter: ");
+	scanf(" %c", &letter);
+
+	if (isalpha(letter))
+		return letter;
+
+	return NULL;
+
+}
 int main()
 {
 	
-	return NULL;
+	// input user
+	char name[20];
+	printf("enter your name: ");
+	scanf("%s", &name);
+	User *user = createUser(name);
+
+	// Start the game
+	// Init the ply
+
+	//printf("%s", PickWord());
+	Ply *ply = InitGame(name);
+
+	printf("game starts...\n");
+	char letter = 0;
+	while (true)
+	{
+		
+		if (!PrintStatus(ply))
+			break;
+
+		// ask for the letter
+		char letter;
+		while (1){
+			letter = TakeInput();
+			if (letter == NULL)
+				continue;
+			break;
+		}
+
+		//check the letter
+		if(!Check(ply, letter))
+			ply->chances -= 1; 
+			
+	}
+
+	_getch();
 }
 
 
