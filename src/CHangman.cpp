@@ -3,7 +3,6 @@
 #include<stdlib.h>
 #include<conio.h>
 #include<ctype.h>
-#include "UserUtils.h"
 #include "GameUtils.h"
 
 /*
@@ -48,80 +47,34 @@
 			
 			print {{ user.name }} you are defeated !
 */
-bool PrintStatus(board* board){
 
-	if (board->chances == 0 || VerifyWord(board)){
-		printf("Your game is completed..\n");
 
-		if (board->chances == 0)
-			printf("you are defeated!");
-		else if (VerifyWord(board))
-			printf("congrats! You won!");
-		Printboard(board);
-
-		return false;
-	}
-
-	//print current status
-	Printboard(board);
-	return true;
-}
-
-/*
-	considering only alpha characters
-*/
-char TakeInput(){
-
-	char letter;
-
-	printf("guess a letter: ");
-	scanf(" %c", &letter);
-
-	if (isalpha(letter))
-		return letter;
-
-	return NULL;
-
-}
 int main()
 {
-	
-	// input user
-	char name[20];
-	printf("enter your name: ");
-	scanf("%s", &name);
-	User *user = createUser(name);
 
-	// Start the game
 	// Init the board
 
-	//printf("%s", PickWord());
-	board *board = InitGame(name);
+	GameState *gamestate = initGameState(1, 10);
 
 	printf("game starts...\n");
 	char letter = 0;
+	int play_move_status = -1;
 	while (true)
 	{
 		
-		if (!PrintStatus(board))
-			break;
+		if (isGameOver(gamestate) < 3)
+			endGame(gamestate, gamestate->difficulty);
 
-		// ask for the letter
-		char letter;
-		while (1){
-			letter = TakeInput();
-			if (letter == NULL)
-				continue;
-			break;
+		letter = TakeInput();
+
+		play_move_status = PlayMove(gamestate, letter);
+		if (play_move_status == false){
+			printf("Wrong input");
+			continue;
 		}
 
-		//check the letter
-		if(!Check(board, letter))
-			board->chances -= 1; 
-			
+		PrintGameState(gamestate);
 	}
-
-	EndGame(board);
 	_getch();
 }
 

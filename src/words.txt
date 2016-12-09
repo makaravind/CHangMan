@@ -1,4 +1,7 @@
-2
 car
 laptop
 bottle
+camera
+bike
+helmet
+zebra
