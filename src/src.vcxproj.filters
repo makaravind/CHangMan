@@ -21,6 +21,9 @@
     <ClInclude Include="GameUtils.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CHangman.cpp">

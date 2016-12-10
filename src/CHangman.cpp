@@ -6,8 +6,8 @@
 #include "GameUtils.h"
 
 /*
-	
-	Name : Hangman
+	Designed by Aravind M
+	Name : HangmanC
 	Ojective of the game:
 		This is simple game which can be played by a two players. You are supposed to build a hangman game
 		in which one player is the computer.
@@ -16,54 +16,69 @@
 
 		How we are going to Design the Game .?
 
-		We are supposed to generate a random word from the collection of words retrived from the file.
-		Total chances a user/player gets are 10. User should guess each possible letter and it's 
-		index in the word and each word should be checked for it's validity. 
+		The game design has 2 ways of loading the words.
+			1) static words, areFileEnabled = 0
+			2) loaded from a file, areFileEnabled = 1
+
+		We are supposed to generate a random word from an array of words.
+		Total chances a user/player gets are vary. User should guess each possible letter
+		each word should be checked for it's validity. 
 		If user guesses wrong chances decreases else game goes on 
 		until user guesses the word or number of chances are decreased to zero.
 
-		// programming detailed (editing)
-		Here we user a board struture which consists of user name, chances count, generated word
-		All funcitons realted to user are in UserUtils.
-					  related to game in GameUtil.
-		Each blank can be represented by any char other than alphabet
+		// programming details
+		struture of GameState
+		GameState{
 
-		
+			char listOfWords[50][20]; // 50 words max-len 20
+			int number_words; // number of words in lisOfWords
+			char user_name[20]; // username of the player
+			char* currentWord; //current state of the word guessed by player
+			char* wordToGuess; //Generated word 
+			int chances_left; 
+			int chances; // total number of chances
+			int areFileEnabled;
+		};
+
+
 		How Game is played :
 
 			<user name>
 			number of chances : 10
-			number of blank spaces: 5
 			<show the word that is guesses by user till now>
 			
-			input: u 2
+			input: u
 			u -> guessed letter 
-			2 -> index (starting from 0 obviosuly!)
-
+			
+			...
 			<user name>
 			number of chances : 0
-			number of blank spaces: 2
 			<show the word that is guesses by user till now>
 			
 			print {{ user.name }} you are defeated !
+
+			Rest directions are detailed at reach function.
 */
 
 
 int main()
 {
 
-	// Init the board
-
-	GameState *gamestate = initGameState(1, 10);
+	// Init the Game State
+	GameState *gamestate = initGameState(0, 10);
 
 	printf("game starts...\n");
 	char letter = 0;
 	int play_move_status = -1;
+
+	// print inti state of the game
+	PrintGameState(gamestate);
+
 	while (true)
 	{
 		
-		if (isGameOver(gamestate) < 3)
-			endGame(gamestate, gamestate->difficulty);
+		if (isGameOver(gamestate))
+			break;
 
 		letter = TakeInput();
 
@@ -75,6 +90,8 @@ int main()
 
 		PrintGameState(gamestate);
 	}
+
+	endGame(gamestate, gamestate->areFileEnabled);
 	_getch();
 }
 
