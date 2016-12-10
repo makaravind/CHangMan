@@ -17,8 +17,8 @@
 		How we are going to Design the Game .?
 
 		The game design has 2 ways of loading the words.
-			1) static words, areFileEnabled = 0
-			2) loaded from a file, areFileEnabled = 1
+			1) static words, areFilesEnabled = 0
+			2) loaded from a file, areFilesEnabled = 1
 
 		We are supposed to generate a random word from an array of words.
 		Total chances a user/player gets are vary. User should guess each possible letter
@@ -37,7 +37,7 @@
 			char* wordToGuess; //Generated word 
 			int chances_left; 
 			int chances; // total number of chances
-			int areFileEnabled;
+			int areFilesEnabled;
 		};
 
 
@@ -60,19 +60,22 @@
 			Rest directions are detailed at reach function.
 */
 
-
 int main()
 {
+
+	AlignCenter();
+	printf("Welcome to HangManC\n");
 
 	// Init the Game State
 	GameState *gamestate = initGameState(0, 10);
 
-	printf("game starts...\n");
 	char letter = 0;
 	int play_move_status = -1;
 
 	// print inti state of the game
 	PrintGameState(gamestate);
+	printf("hello, %s\n", gamestate->user_name);
+
 
 	while (true)
 	{
@@ -84,14 +87,16 @@ int main()
 
 		play_move_status = PlayMove(gamestate, letter);
 		if (play_move_status == false){
-			printf("Wrong input");
+			printf("Wrong input\n");
 			continue;
 		}
 
+		printf("press any key to continue...");
+		_getch();
 		PrintGameState(gamestate);
 	}
 
-	endGame(gamestate, gamestate->areFileEnabled);
+	endGame(gamestate, gamestate->areFilesEnabled);
 	_getch();
 }
 

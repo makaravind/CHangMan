@@ -76,34 +76,22 @@ bool ValidateInput(char letter){
 }
 
 
-/*
-	args: type of the message: int
-	return: check the type return the appriote message
-
-	1 -> welcome message
-	2 -> end game message
-	3 -> game won 
-	4 -> game lost
-*/
-char* getMessage(int type){
-
-	switch (type)
-	{
-	case 1:
-		// welcome message
-		return "Welcome to HangMan";
-	case 2:
-		// end game message
-		return "thanks for playing";
-	case 3:
-		// game won
-		return "you won!";
-	case 4:
-		// game lost
-		return "you lost !";
-	default:
-		return NULL;
-	}
+void AlignCenter(){
+	printf("\t\t\t\t");
+}
 
 
+void printHangman(){
+
+
+	printf("\t\t\t\t   ____     \n");
+	printf("\t\t\t\t  |    |    \n");
+	printf("\t\t\t\t  |    o    \n");
+	printf("\t\t\t\t  |   /|\   \n");
+	printf("\t\t\t\t  |    |    \n");
+	printf("\t\t\t\t  |   / \   \n");
+	printf("\t\t\t\t _|_        \n");
+	printf("\t\t\t\t|   |______ \n");
+	printf("\t\t\t\t|          | \n");
+	printf("\t\t\t\t|__________|\n");
 }
