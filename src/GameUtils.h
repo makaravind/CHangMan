@@ -225,7 +225,7 @@ void endGame(GameState *gamestate, int areFilesEnabled){
 	}
 
 
-	_getch();
+//	_getch();
 	system("cls");
 	printHangman();
 	AlignCenter();
