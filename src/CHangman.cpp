@@ -18,7 +18,11 @@
 
 		The game design has 2 ways of loading the words.
 			1) static words, areFilesEnabled = 0
+
 			2) loaded from a file, areFilesEnabled = 1
+			   The end game details are also saved in a file.
+	
+
 
 		We are supposed to generate a random word from an array of words.
 		Total chances a user/player gets are vary. User should guess each possible letter
@@ -40,6 +44,18 @@
 			int areFilesEnabled;
 		};
 
+		Functions call sequence:
+			
+			1) initGameState() 
+			loop:start
+			2) isGameOver()
+			3) TakeInput()
+			4) PlayMove()
+			5) PrintStatus
+			loop:end
+			6) endGame()
+
+		Watch game play: http://www.screencast.com/t/W0YiUfWlRKH
 
 		How Game is played :
 
@@ -57,7 +73,7 @@
 			
 			print {{ user.name }} you are defeated !
 
-			Rest directions are detailed at reach function.
+		Rest directions are detailed at each function.
 */
 
 int main()
@@ -66,8 +82,9 @@ int main()
 	AlignCenter();
 	printf("Welcome to HangManC\n");
 
+
 	// Init the Game State
-	GameState *gamestate = initGameState(0, 10);
+	GameState *gamestate = initGameState(0, 10, TakeInputUserName());
 
 	char letter = 0;
 	int play_move_status = -1;
@@ -80,11 +97,14 @@ int main()
 	while (true)
 	{
 		
+		// checking the status if the game state
 		if (isGameOver(gamestate))
 			break;
 
+		// taking the input from the user
 		letter = TakeInput();
 
+		// applying the move
 		play_move_status = PlayMove(gamestate, letter);
 		if (play_move_status == false){
 			printf("Wrong input\n");
@@ -93,6 +113,7 @@ int main()
 
 		printf("press any key to continue...");
 		_getch();
+		// printing the game state
 		PrintGameState(gamestate);
 	}
 

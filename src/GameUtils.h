@@ -79,7 +79,7 @@ char* pickWord(GameState* gamestate){
 			total_chances: int
 	return: fabricated GameState 
 */
-GameState* initGameState(bool areFilesEnabled, int total_chances){
+GameState* initGameState(bool areFilesEnabled, int total_chances, char* user_name){
 
 	GameState *gamestate = (GameState*)malloc(sizeof(GameState));
 
@@ -87,7 +87,7 @@ GameState* initGameState(bool areFilesEnabled, int total_chances){
 	LoadWords(gamestate, areFilesEnabled);
 
 	// create the game init 
-	strcpy(gamestate->user_name, TakeInputUserName());
+	strcpy(gamestate->user_name, user_name);
 	//gamestate->listOfWords = collectionOfWords;
 	gamestate->chances = total_chances;
 	gamestate->chances_left = total_chances;
@@ -136,6 +136,11 @@ void updateGame(GameState* gamestate, int index, char guess_letter){
 	args: gamestate: GameState
 			guessed_letter: char
 	return: is played correct or not: bool
+
+	first validate the user input, return false if not valid.
+	check where the guessed letter is present in the word
+	and update the GameState accordingly and return true.
+
 */
 bool PlayMove(GameState* gamestate, char guessed_letter){
 
@@ -151,39 +156,43 @@ bool PlayMove(GameState* gamestate, char guessed_letter){
 /*
 check if chances zero
 */
-bool isChancesZero(int chances){
+bool isChancesZero(GameState *gamestate){
 
-	if (chances == 0) return 1;
-	return NULL;
+	if (gamestate->chances_left == 0) return 1;
+	return 0;
 }
 
 
 /*
 check if word_to_guess matched with current_word
 */
-bool isWordCompleted(char* word_to_guess, char* current_word){
+bool isWordCompleted(GameState *gamestate){
 
-	if (strcmp(word_to_guess, current_word) == 0)
-		return 2;
-	return NULL;
+	if (strcmp(gamestate->wordToGuess, gamestate->currentWord) == 0)
+		return 1;
+	return 0;
 }
 
 
 /*
 	args: gamestate: GameState
 	return: bool
+
+	check if number of chances reached zero 
+	or if whole word is guessed right then return true
+	else return false
 */
 bool isGameOver(GameState* gamestate){
 
 	// checking number of chances
-	if (isChancesZero(gamestate->chances_left)){
+	if (isChancesZero(gamestate)){
 		AlignCenter();
 		printf("%s", "Game lost!\n");
 		return true;
 	}
 
 	// checking the word if complete
-	if (isWordCompleted(gamestate->wordToGuess, gamestate->currentWord)){
+	if (isWordCompleted(gamestate)){
 		AlignCenter();
 		printf("%s", "Game won!\n");
 		return true;
