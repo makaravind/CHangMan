@@ -53,9 +53,16 @@ void LoadWords(GameState* gamestate, bool areFilesEnabled){
 /*
 args: gamestate: GameState, index: int
 return: word at index
+return empty string for any exception conditions
 */
 char* getWordAtIndex(GameState* gamestate, int index){
-	return gamestate->listOfWords[index];
+
+	if (index < 0 || gamestate->number_words-1 < index) return "";
+
+	char* word =  gamestate->listOfWords[index];
+
+	if (word == NULL) return "";
+	return word;
 }
 
 
